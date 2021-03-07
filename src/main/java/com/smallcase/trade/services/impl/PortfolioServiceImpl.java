@@ -26,7 +26,7 @@ public class PortfolioServiceImpl implements PortfolioService {
     public List<Portfolio> getAllPortfolioForUser(Integer userId) {
         validationUtil.validateUserId(userId);
         List<Integer> portfolioIds = Data.USER_PORTFOLIO_MAP.getOrDefault(userId,new ArrayList<>());
-        return portfolioIds.stream().map(id -> Data.PORTFOLIO_MAP.get(id)).collect(Collectors.toList());
+        return portfolioIds.stream().map(id -> Data.PORTFOLIO_MAP.get(id)).filter(Portfolio::getIsActive).collect(Collectors.toList());
     }
 
     @Override
@@ -61,6 +61,7 @@ public class PortfolioServiceImpl implements PortfolioService {
         Portfolio portfolio = Portfolio.builder()
                 .id(Data.PORTFOLIO_MAP.size()+1)
                 .tickerAggregateList(new ArrayList<>())
+                .isActive(true)
                 .build();
         Data.PORTFOLIO_MAP.put(portfolio.getId(),portfolio);
         List<Integer> ids = Data.USER_PORTFOLIO_MAP.getOrDefault(userId,new ArrayList<>());

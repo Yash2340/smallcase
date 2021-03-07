@@ -22,4 +22,6 @@ public class Portfolio {
     private Integer id;
 
     private List<TickerAggregateDto> tickerAggregateList;
+
+    private Boolean isActive;
 }

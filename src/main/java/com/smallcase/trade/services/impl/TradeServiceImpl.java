@@ -146,18 +146,22 @@ public class TradeServiceImpl implements TradeService {
                 .map(i -> Data.TRADE_MAP.get(i))
                 .filter(trade -> trade.getTradeType().equals(tradeDeleted.getTradeType()))
                 .filter(Trade::getIsActive).collect(Collectors.toList());
-        int shares = 0;
-        double avg = 0;
-        for (Trade trade : tradeList) {
-            if (trade.getTradeType().equals(TradeType.SELL)) {
-                shares = shares - trade.getShare();
-            } else {
-                avg = (avg*shares + trade.getPrice()*trade.getShare())/(shares + trade.getShare());
-                shares = shares + trade.getShare();
+        if (!tradeList.isEmpty()) {
+            int shares = 0;
+            double avg = 0;
+            for (Trade trade : tradeList) {
+                if (trade.getTradeType().equals(TradeType.SELL)) {
+                    shares = shares - trade.getShare();
+                } else {
+                    avg = (avg * shares + trade.getPrice() * trade.getShare()) / (shares + trade.getShare());
+                    shares = shares + trade.getShare();
+                }
             }
+            dto.setAvgBuyPrice(avg);
+            dto.setShare(shares);
+        } else {
+            portfolio.setIsActive(false);
         }
-        dto.setAvgBuyPrice(avg);
-        dto.setShare(shares);
     }
 
     @Override
