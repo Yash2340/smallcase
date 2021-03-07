@@ -22,7 +22,7 @@ public class ValidationUtil {
                 (Objects.isNull(requestDto.getPrice()) || requestDto.getPrice()<=0)) {
             throw new ValidationException("Invalid price");
         }
-        if (Objects.isNull(requestDto.getTicketSymbol()) || requestDto.getTicketSymbol().isEmpty()) {
+        if (Objects.isNull(requestDto.getTickerSymbol()) || requestDto.getTickerSymbol().isEmpty()) {
             throw new ValidationException("Invalid ticker symbol");
         }
         if (Objects.isNull(requestDto.getShare()) || requestDto.getShare()<=0) {
