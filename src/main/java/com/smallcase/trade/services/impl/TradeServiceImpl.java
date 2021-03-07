@@ -188,7 +188,7 @@ public class TradeServiceImpl implements TradeService {
             } else {
                 throw new ValidationException("Trade not found");
             }
-        } catch (Exception e) {
+        } catch (IndexOutOfBoundsException e) {
             throw new ValidationException("Deleted trade cannot be updated");
         }
     }
