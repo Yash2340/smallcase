@@ -160,7 +160,7 @@ public class TradeServiceImpl implements TradeService {
             dto.setAvgBuyPrice(avg);
             dto.setShare(shares);
         } else {
-            portfolio.setIsActive(false);
+            portfolio.getTickerAggregateList().remove(dto);
         }
     }
 
