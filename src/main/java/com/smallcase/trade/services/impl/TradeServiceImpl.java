@@ -59,7 +59,7 @@ public class TradeServiceImpl implements TradeService {
                 .id(Data.TRADE_MAP.size()+1)
                 .price(requestDto.getPrice())
                 .tradeType(TradeType.valueOf(requestDto.getTradeType()))
-                .tickerSymbol(requestDto.getTicketSymbol())
+                .tickerSymbol(requestDto.getTickerSymbol())
                 .share(requestDto.getShare())
                 .isActive(true)
                 .build();
@@ -168,7 +168,7 @@ public class TradeServiceImpl implements TradeService {
         if (Objects.nonNull(trade)) {
             trade.setTradeType(TradeType.valueOf(requestDto.getTradeType().toUpperCase()));
             trade.setPrice(requestDto.getPrice());
-            trade.setTickerSymbol(requestDto.getTicketSymbol());
+            trade.setTickerSymbol(requestDto.getTickerSymbol());
             trade.setShare(requestDto.getShare());
             Data.TRADE_MAP.put(requestDto.getId(),trade);
             List<Integer> portfolioIds = Data.USER_PORTFOLIO_MAP.getOrDefault(userId, new ArrayList<>())
