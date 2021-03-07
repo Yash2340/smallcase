@@ -166,26 +166,30 @@ public class TradeServiceImpl implements TradeService {
 
     @Override
     public Trade updateTrade(Integer userId, TradeRequestDto requestDto) {
-        validationUtil.validateUserId(userId);
-        validationUtil.validateTradeRequest(requestDto);
-        Trade trade = Data.TRADE_MAP.getOrDefault(requestDto.getId(),null);
-        if (Objects.nonNull(trade)) {
-            trade.setTradeType(TradeType.valueOf(requestDto.getTradeType().toUpperCase()));
-            trade.setPrice(requestDto.getPrice());
-            trade.setTickerSymbol(requestDto.getTickerSymbol());
-            trade.setShare(requestDto.getShare());
-            trade.setIsActive(requestDto.getIsActive());
-            Data.TRADE_MAP.put(requestDto.getId(),trade);
-            List<Integer> portfolioIds = Data.USER_PORTFOLIO_MAP.getOrDefault(userId, new ArrayList<>())
-                    .stream()
-                    .filter(p ->
-                            Data.PORTFOLIO_TRADE_MAP.get(p)
-                                    .stream().anyMatch(t -> t.intValue() == requestDto.getId().intValue()))
-                    .collect(Collectors.toList());
-            revertPortfolio(trade,portfolioIds.get(0));
-            return trade;
-        } else {
-            throw new ValidationException("Trade not found");
+        try {
+            validationUtil.validateUserId(userId);
+            validationUtil.validateTradeRequest(requestDto);
+            Trade trade = Data.TRADE_MAP.getOrDefault(requestDto.getId(), null);
+            if (Objects.nonNull(trade)) {
+                trade.setTradeType(TradeType.valueOf(requestDto.getTradeType().toUpperCase()));
+                trade.setPrice(requestDto.getPrice());
+                trade.setTickerSymbol(requestDto.getTickerSymbol());
+                trade.setShare(requestDto.getShare());
+                trade.setIsActive(requestDto.getIsActive());
+                Data.TRADE_MAP.put(requestDto.getId(), trade);
+                List<Integer> portfolioIds = Data.USER_PORTFOLIO_MAP.getOrDefault(userId, new ArrayList<>())
+                        .stream()
+                        .filter(p ->
+                                Data.PORTFOLIO_TRADE_MAP.get(p)
+                                        .stream().anyMatch(t -> t.intValue() == requestDto.getId().intValue()))
+                        .collect(Collectors.toList());
+                revertPortfolio(trade, portfolioIds.get(0));
+                return trade;
+            } else {
+                throw new ValidationException("Trade not found");
+            }
+        } catch (Exception e) {
+            throw new ValidationException("Deleted trade cannot be updated");
         }
     }
 }
