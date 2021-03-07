@@ -33,7 +33,7 @@ public class PortfolioServiceImpl implements PortfolioService {
     public Portfolio getPortfolio(Integer id, Integer userId) {
         validationUtil.validateUserId(userId);
         Portfolio portfolio =  Data.PORTFOLIO_MAP.getOrDefault(id,null);
-        if(Objects.nonNull(portfolio)) {
+        if(Objects.nonNull(portfolio) && portfolio.getIsActive()) {
             return portfolio;
         } else {
             throw new ValidationException("Portfolio not found");
