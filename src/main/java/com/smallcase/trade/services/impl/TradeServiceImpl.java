@@ -189,7 +189,7 @@ public class TradeServiceImpl implements TradeService {
                 throw new ValidationException("Trade not found");
             }
         } catch (IndexOutOfBoundsException e) {
-            throw new ValidationException("Deleted trade cannot be updated");
+            throw new ValidationException("Trade not found in any portfolio");
         }
     }
 }
