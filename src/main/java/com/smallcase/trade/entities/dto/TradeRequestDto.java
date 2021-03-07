@@ -25,4 +25,6 @@ public class TradeRequestDto {
     private Double price;
 
     private Integer share;
+
+    private Boolean isActive;
 }

@@ -174,6 +174,7 @@ public class TradeServiceImpl implements TradeService {
             trade.setPrice(requestDto.getPrice());
             trade.setTickerSymbol(requestDto.getTickerSymbol());
             trade.setShare(requestDto.getShare());
+            trade.setIsActive(requestDto.getIsActive());
             Data.TRADE_MAP.put(requestDto.getId(),trade);
             List<Integer> portfolioIds = Data.USER_PORTFOLIO_MAP.getOrDefault(userId, new ArrayList<>())
                     .stream()
