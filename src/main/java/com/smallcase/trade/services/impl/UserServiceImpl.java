@@ -8,6 +8,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @Slf4j
 public class UserServiceImpl implements UserService {
@@ -27,5 +30,10 @@ public class UserServiceImpl implements UserService {
         user.setId(id);
         Data.USER_MAP.put(id,user);
         return Data.USER_MAP.get(id);
+    }
+
+    @Override
+    public List<User> getUsers() {
+        return new ArrayList<>(Data.USER_MAP.values());
     }
 }
